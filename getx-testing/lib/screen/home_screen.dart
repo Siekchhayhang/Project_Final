@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:getx_testting/screen/onboarding_screen.dart';
+import 'package:getx_testting/pages/setttings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -133,7 +135,7 @@ class _HomePageState extends State<HomePage> {
         content: Text('You have successfully deleted a product')));
   }
 
-   int _selectedIndex = 0;
+  int _selectedIndex = 0;
   void _navigateBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
@@ -194,13 +196,28 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _navigateBottomBar,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OnboardingScreen()));
+                },
+                icon: const Icon(Icons.home)),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
+                );
+              },
+              icon: const Icon(Icons.settings),
+            ),
             label: 'Settings',
           ),
         ],

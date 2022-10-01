@@ -40,6 +40,12 @@ dependencies:
   bloc: ^8.1.0
   firebase_auth_oauth: ^1.2.0
   google_sign_in: ^5.4.2
+  flutter_native_splash: ^2.2.9
+  smooth_page_indicator: ^1.0.0+2
+  shared_preferences: ^2.0.15
+flutter_native_splash:
+  color: "#42a5f5"
+  image: "images/adidass.png"  
 
 dev_dependencies:
   flutter_test:

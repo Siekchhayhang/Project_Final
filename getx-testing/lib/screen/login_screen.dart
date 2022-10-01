@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_testting/home_screen.dart';
+import 'package:getx_testting/screen/home_screen.dart';
 import 'package:getx_testting/screen/google_signing_screen.dart';
 import 'package:getx_testting/screen/signup_screen.dart';
 
