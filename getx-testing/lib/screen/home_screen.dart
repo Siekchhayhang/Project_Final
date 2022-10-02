@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:getx_testting/screen/onboarding_screen.dart';
-import 'package:getx_testting/pages/setttings_page.dart';
+
+import '../setttings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

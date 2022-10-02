@@ -3,7 +3,6 @@ import 'package:getx_testting/screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../widgets/onboarding_widget.dart';
-import 'get_start_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -26,35 +25,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        child: PageView(
-          controller: controller,
-          onPageChanged: (index) {
-            setState(() {
-              isLastPage = index == 2;
-            });
-          },
-          children: const  [
-            OnboardWidgets(
-              image: 'assets/images/welcome-greeting-message.png',
-              subtitle:
-                  'Welcome to our company! We\'re so excited to have you as part of our team.',
-              color: Colors.white,
-            ),
-             OnboardWidgets(
-              image: 'assets/images/our-services.png',
-              subtitle:
-                  'Essay writing services offer multiple academic and professional types of writing to cater to their customers needs. You can order an admission essay, creative writing essay, research paper lab report or any other type of academic writing for a price.',
-              color: Colors.white10,
-            ),
-             OnboardWidgets(
-              image: 'assets/images/get-start.png',
-              subtitle:
-                  'Join Us for more detials.',
-              color: Colors.white,
-            )
-          ],
-        ),
+      body: PageView(
+        controller: controller,
+        onPageChanged: (index) {
+          setState(() {
+            isLastPage = index == 2;
+          });
+        },
+        children: const  [
+          OnboardWidgets(
+            image: 'assets/images/welcome-greeting-message.png',
+            subtitle:
+                'Welcome to our company! We\'re so excited to have you as part of our team.',
+            color: Colors.white,
+          ),
+           OnboardWidgets(
+            image: 'assets/images/our-services.png',
+            subtitle:
+                'Essay writing services offer multiple academic and professional types of writing to cater to their customers needs. You can order an admission essay, creative writing essay, research paper lab report or any other type of academic writing for a price.',
+            color: Colors.white10,
+          ),
+           OnboardWidgets(
+            image: 'assets/images/get-start.png',
+            subtitle:
+                'Join Us for more detials.',
+            color: Colors.white,
+          )
+        ],
       ),
       bottomSheet: Container(
         alignment: Alignment.center,
