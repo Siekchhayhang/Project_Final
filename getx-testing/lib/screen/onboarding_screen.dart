@@ -45,12 +45,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 'Essay writing services offer multiple academic and professional types of writing to cater to their customers needs. You can order an admission essay, creative writing essay, research paper lab report or any other type of academic writing for a price.',
             color: Colors.white10,
           ),
-           OnboardWidgets(
-            image: 'assets/images/get-start.png',
-            subtitle:
-                'Join Us for more detials.',
-            color: Colors.white,
-          )
+           Center(
+             child: OnboardWidgets(
+              image: 'assets/images/get-start.png',
+              subtitle:
+                  'Join Us for more detials.',
+              color: Colors.white,
+          ),
+           )
         ],
       ),
       bottomSheet: Container(

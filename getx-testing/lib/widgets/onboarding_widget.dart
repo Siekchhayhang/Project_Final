@@ -22,7 +22,7 @@ class OnboardWidgets extends StatelessWidget {
           color: color ?? Colors.green,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 title ?? '',

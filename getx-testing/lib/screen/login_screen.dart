@@ -6,7 +6,6 @@ import 'package:getx_testting/screen/home_screen.dart';
 import 'package:getx_testting/screen/google_signing_screen.dart';
 import 'package:getx_testting/screen/signup_screen.dart';
 
-
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
@@ -83,12 +82,10 @@ class LoginScreen extends StatelessWidget {
                       TextButton(
                         child: const Text(
                           'Click here for Login with Google',
-                          style: TextStyle(
-                              color: Colors.blue, fontSize: 16),
+                          style: TextStyle(color: Colors.blue, fontSize: 16),
                         ),
                         onPressed: () => Get.to(const GoogleSigninPage()),
                       ),
-
                     ],
                   ),
                 ],

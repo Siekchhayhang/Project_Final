@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:getx_testting/screen/onboarding_screen.dart';
-
-import '../setttings_page.dart';
+import '../pages/setttings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -160,21 +160,49 @@ class _HomePageState extends State<HomePage> {
                     streamSnapshot.data!.docs[index];
                 return Card(
                   margin: const EdgeInsets.all(10),
-                  child: ListTile(
-                    title: Text(documentSnapshot['name']),
-                    subtitle: Text(documentSnapshot['price'].toString()),
-                    trailing: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
-                          IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () => _update(documentSnapshot)),
-                          IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () => _delete(documentSnapshot.id)),
-                        ],
-                      ),
+                  child: Slidable(
+                    startActionPane: ActionPane(
+                      motion: const StretchMotion(),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) {
+                            _update(documentSnapshot);
+                          },
+                          icon: Icons.edit,
+                          backgroundColor:
+                               Colors.blue,
+                        ),
+                      ],
+                    ),
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) {
+                            _delete(documentSnapshot.id);
+                          },
+                          icon: Icons.delete_forever_rounded,
+                          backgroundColor:
+                              Colors.red,
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      title: Text(documentSnapshot['name']),
+                      subtitle: Text(documentSnapshot['price'].toString()),
+                      // trailing: SizedBox(
+                      //   width: 100,
+                      //   child: Row(
+                      //     children: const [
+                      //       // IconButton(
+                      //       //     icon: const Icon(Icons.edit),
+                      //       //     onPressed: () => _update(documentSnapshot)),
+                      //       // IconButton(
+                      //       //     icon: const Icon(Icons.delete),
+                      //       //     onPressed: () => _delete(documentSnapshot.id)),
+                      //     ],
+                      //   ),
+                      // ),
                     ),
                   ),
                 );
