@@ -62,6 +62,7 @@ class SignUpScreen extends StatelessWidget {
                       userController.text.trim(),
                       passwordController.text.trim(),
                       confirmpasswordController.text.trim(),
+                      
                     ),
                   ),
                 ],

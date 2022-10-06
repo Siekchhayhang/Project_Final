@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:getx_testting/screen/login_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../services/google_service.dart';
 
 class GoogleSigninPage extends StatefulWidget {
@@ -26,7 +28,17 @@ class _GoogleSigninPageState extends State<GoogleSigninPage> {
           ),
           onPressed: () {
             GoogleSigninService().siginWithGoogle();
-            setState(() {});
+            setState(
+              () {
+                GoogleSignIn().signIn();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
+              },
+            );
           },
           label: Text(
             'Signin with Google',

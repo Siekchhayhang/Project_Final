@@ -163,14 +163,15 @@ class _HomePageState extends State<HomePage> {
                   child: Slidable(
                     startActionPane: ActionPane(
                       motion: const StretchMotion(),
+                      
                       children: [
                         SlidableAction(
+                          borderRadius: BorderRadius.circular(12),
                           onPressed: (context) {
                             _update(documentSnapshot);
                           },
                           icon: Icons.edit,
-                          backgroundColor:
-                               Colors.blue,
+                          backgroundColor: Colors.green,
                         ),
                       ],
                     ),
@@ -178,12 +179,12 @@ class _HomePageState extends State<HomePage> {
                       motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
+                          borderRadius: BorderRadius.circular(12),
                           onPressed: (context) {
                             _delete(documentSnapshot.id);
                           },
-                          icon: Icons.delete_forever_rounded,
-                          backgroundColor:
-                              Colors.red,
+                          icon: Icons.delete,
+                          backgroundColor: Colors.red,
                         ),
                       ],
                     ),
