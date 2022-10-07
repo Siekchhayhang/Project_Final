@@ -62,11 +62,10 @@ class SignUpScreen extends StatelessWidget {
                       userController.text.trim(),
                       passwordController.text.trim(),
                       confirmpasswordController.text.trim(),
-                      
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -83,9 +82,13 @@ class SignUpScreen extends StatelessWidget {
           email: username,
           password: password,
         )
-            .then((value) {
-          Get.to(LoginScreen());
-        });
+            .then(
+          (value) {
+            Get.to(
+              LoginScreen(),
+            );
+          },
+        );
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -95,9 +98,20 @@ class SignUpScreen extends StatelessWidget {
         showDialog(
           context: Get.context!,
           builder: (context) {
-            return const AlertDialog(
-              actionsAlignment: MainAxisAlignment.center,
-              content: Text('The account already exists for that email.'),
+            return CupertinoAlertDialog(
+              title: const Text('The account already exists for that email'),
+              content: const Text(
+                'Please check it again!',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
+              actions: [
+                MaterialButton(
+                  onPressed: (() {
+                    Navigator.pop(context);
+                  }),
+                  child: const Text('OK'),
+                )
+              ],
             );
           },
         );

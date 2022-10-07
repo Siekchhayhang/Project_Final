@@ -51,14 +51,11 @@ class LoginScreen extends StatelessWidget {
                         constraints:
                             BoxConstraints.tightFor(width: context.width),
                         child: CupertinoButton(
-                          borderRadius: BorderRadius.circular(18),
-                          color: Colors.blue,
-                          child: const Text('Login'),
-                          onPressed: () => login(
-                            userController.text.trim(),
-                            passwordController.text.trim(),
-                          ),
-                        ),
+                            borderRadius: BorderRadius.circular(18),
+                            color: Colors.blue,
+                            child: const Text('Login'),
+                            onPressed: () => login(userController.text.trim(),
+                                passwordController.text.trim())),
                       ),
 
                       // const SizedBox(height: 10),
@@ -109,9 +106,16 @@ class LoginScreen extends StatelessWidget {
         showDialog(
           context: Get.context!,
           builder: (context) {
-            return const AlertDialog(
-              actionsAlignment: MainAxisAlignment.center,
-              content: Text('Invalid UserName, please check it again!'),
+            return CupertinoAlertDialog(
+              title: const Text('Invalid User Name'),
+              content: const Text('Please check it again!',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+              actions: [
+                MaterialButton(
+                  onPressed: (() {
+                    Navigator.pop(context);
+                  }),child:const Text('OK'),
+                )
+              ],
             );
           },
         );
@@ -119,9 +123,16 @@ class LoginScreen extends StatelessWidget {
         showDialog(
           context: Get.context!,
           builder: (context) {
-            return const AlertDialog(
-              actionsAlignment: MainAxisAlignment.center,
-              content: Text('Invalid Password, please check it again!'),
+            return CupertinoAlertDialog(
+              title: const Text('Invalid Password'),
+              content: const Text('Please check it again!',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+              actions: [
+                MaterialButton(
+                  onPressed: (() {
+                    Navigator.pop(context);
+                  }),child:const Text('OK'),
+                )
+              ],
             );
           },
         );

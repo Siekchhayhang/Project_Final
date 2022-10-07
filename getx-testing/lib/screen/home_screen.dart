@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:getx_testting/screen/onboarding_screen.dart';
@@ -147,7 +148,23 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Product List')),
+        title: Center(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Product List'),
+            ButtonBar(
+              children: [
+                IconButton(
+                  padding: const EdgeInsets.only(right: 0.1),
+                  alignment: Alignment.centerRight,
+                  onPressed: (() => FirebaseAuth.instance.signOut()),
+                  icon: const Icon(Icons.logout),
+                ),
+              ],
+            )
+          ],
+        )),
       ),
       body: StreamBuilder(
         stream: _products.snapshots(),
@@ -163,7 +180,6 @@ class _HomePageState extends State<HomePage> {
                   child: Slidable(
                     startActionPane: ActionPane(
                       motion: const StretchMotion(),
-                      
                       children: [
                         SlidableAction(
                           borderRadius: BorderRadius.circular(12),
