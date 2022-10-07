@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                           onPressed: (context) {
                             _delete(documentSnapshot.id);
                           },
-                          icon: Icons.delete,
+                          icon: Icons.delete_forever_rounded,
                           backgroundColor: Colors.red,
                         ),
                       ],
