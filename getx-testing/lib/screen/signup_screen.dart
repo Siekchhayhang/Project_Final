@@ -85,7 +85,7 @@ class SignUpScreen extends StatelessWidget {
             .then(
           (value) {
             Get.to(
-              LoginScreen(),
+              const LoginScreen(),
             );
           },
         );

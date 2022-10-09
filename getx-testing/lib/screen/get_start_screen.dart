@@ -9,17 +9,18 @@ class GetStartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Center(child: Text('Get Start Screen')),
+        title: const Center(child: Text('Get Start Screen')),
       ),
       body: Center(
         child: TextButton(
           onPressed: () async {
             final prefs = await SharedPreferences.getInstance();
             prefs.setBool('showHome', false);
+
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (_) =>  LoginScreen(),
+                builder: (_) => const LoginScreen(),
               ),
             );
           },

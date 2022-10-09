@@ -18,9 +18,14 @@ class _HomePageState extends State<HomePage> {
 // text fields' controllers
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-
   final CollectionReference _products =
       FirebaseFirestore.instance.collection('products');
+  @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+    _priceController.dispose();
+  }
 
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
     await showModalBottomSheet(
@@ -39,14 +44,24 @@ class _HomePageState extends State<HomePage> {
               children: [
                 TextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.production_quantity_limits_sharp,
+                        color: Colors.green,
+                      ),
+                      hintText: 'Product Name'),
                 ),
                 TextField(
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   controller: _priceController,
                   decoration: const InputDecoration(
-                    labelText: 'Price',
+                    prefixIcon: Icon(
+                      Icons.currency_exchange_outlined,
+                      color: Colors.green,
+                      size: 20,
+                    ),
+                    hintText: 'Price',
                   ),
                 ),
                 const SizedBox(
@@ -63,6 +78,7 @@ class _HomePageState extends State<HomePage> {
 
                       _nameController.text = '';
                       _priceController.text = '';
+                      if (!mounted) return;
                       Navigator.of(context).pop();
                     }
                   },
@@ -95,14 +111,25 @@ class _HomePageState extends State<HomePage> {
               children: [
                 TextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.production_quantity_limits_outlined,
+                      color: Colors.green,
+                    ),
+                    hintText: 'Product Name',
+                  ),
                 ),
                 TextField(
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   controller: _priceController,
                   decoration: const InputDecoration(
-                    labelText: 'Price',
+                    prefixIcon: Icon(
+                      Icons.currency_exchange_outlined,
+                      color: Colors.green,
+                      size: 20,
+                    ),
+                    hintText: 'Price',
                   ),
                 ),
                 const SizedBox(
@@ -120,6 +147,7 @@ class _HomePageState extends State<HomePage> {
                           .update({"name": name, "price": price});
                       _nameController.text = '';
                       _priceController.text = '';
+                      if (!mounted) return;
                       Navigator.of(context).pop();
                     }
                   },
@@ -132,9 +160,13 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _delete(String productId) async {
     await _products.doc(productId).delete();
+    if (!mounted) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('You have successfully deleted a product')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('You have successfully deleted a product'),
+      ),
+    );
   }
 
   int _selectedIndex = 0;

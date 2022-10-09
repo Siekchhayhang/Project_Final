@@ -6,11 +6,23 @@ import 'package:getx_testting/screen/home_screen.dart';
 import 'package:getx_testting/screen/google_signing_screen.dart';
 import 'package:getx_testting/screen/signup_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  
+  @override
+  void dispose() {
+    super.dispose();
+    userController.dispose();
+    passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,12 +120,16 @@ class LoginScreen extends StatelessWidget {
           builder: (context) {
             return CupertinoAlertDialog(
               title: const Text('Invalid User Name'),
-              content: const Text('Please check it again!',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+              content: const Text(
+                'Please check it again!',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
               actions: [
                 MaterialButton(
                   onPressed: (() {
                     Navigator.pop(context);
-                  }),child:const Text('OK'),
+                  }),
+                  child: const Text('OK'),
                 )
               ],
             );
@@ -125,12 +141,16 @@ class LoginScreen extends StatelessWidget {
           builder: (context) {
             return CupertinoAlertDialog(
               title: const Text('Invalid Password'),
-              content: const Text('Please check it again!',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+              content: const Text(
+                'Please check it again!',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
               actions: [
                 MaterialButton(
                   onPressed: (() {
                     Navigator.pop(context);
-                  }),child:const Text('OK'),
+                  }),
+                  child: const Text('OK'),
                 )
               ],
             );

@@ -64,10 +64,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onPressed: () async {
                   final prefs = await SharedPreferences.getInstance();
                   prefs.setBool('showHome', true);
+                  if (!mounted) return;
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => LoginScreen(),
+                      builder: (_) => const LoginScreen(),
                     ),
                   );
                 },
