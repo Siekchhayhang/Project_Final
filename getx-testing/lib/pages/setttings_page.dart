@@ -7,10 +7,12 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Setting Page'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:  [
+            const Text('Setting Page'),DrawerHeader(child: Column())
+          ],
         ),
-      
       ),
       body: const ListTile(),
     );

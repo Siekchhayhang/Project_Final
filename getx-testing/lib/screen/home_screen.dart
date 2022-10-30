@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import 'package:getx_testting/screen/onboarding_screen.dart';
 import '../pages/setttings_page.dart';
 
@@ -20,11 +22,20 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _priceController = TextEditingController();
   final CollectionReference _products =
       FirebaseFirestore.instance.collection('products');
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _nameController.clear();
+    _priceController.clear();
+    super.initState();
+  }
+
   @override
   void dispose() {
-    super.dispose();
     _nameController.dispose();
     _priceController.dispose();
+    super.dispose();
   }
 
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
@@ -45,11 +56,12 @@ class _HomePageState extends State<HomePage> {
                 TextField(
                   controller: _nameController,
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.production_quantity_limits_sharp,
-                        color: Colors.green,
-                      ),
-                      hintText: 'Product Name'),
+                    prefixIcon: Icon(
+                      Icons.production_quantity_limits_sharp,
+                      color: Colors.green,
+                    ),
+                    hintText: 'Product Name',
+                  ),
                 ),
                 TextField(
                   keyboardType:
@@ -75,7 +87,6 @@ class _HomePageState extends State<HomePage> {
                         double.tryParse(_priceController.text);
                     if (price != null) {
                       await _products.add({"name": name, "price": price});
-
                       _nameController.text = '';
                       _priceController.text = '';
                       if (!mounted) return;
@@ -108,6 +119,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
+              key: formKey,
               children: [
                 TextField(
                   controller: _nameController,
@@ -149,6 +161,7 @@ class _HomePageState extends State<HomePage> {
                       _priceController.text = '';
                       if (!mounted) return;
                       Navigator.of(context).pop();
+                      formKey.currentState!.reset();
                     }
                   },
                 )
@@ -159,13 +172,49 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _delete(String productId) async {
-    await _products.doc(productId).delete();
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('You have successfully deleted a product'),
-      ),
+    await showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: const Text('Are you sure want to delete this product?'),
+          actions: [
+            MaterialButton(
+              onPressed: (() {
+                Navigator.pop(context);
+                _products.doc(productId).delete();
+                if (!mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'You have successfully deleted a product',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                );
+              }),
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            MaterialButton(
+              onPressed: (() {
+                Navigator.pop(context);
+              }),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 16,
+                ),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -181,22 +230,29 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Product List'),
-            ButtonBar(
-              children: [
-                IconButton(
-                  padding: const EdgeInsets.only(right: 0.1),
-                  alignment: Alignment.centerRight,
-                  onPressed: (() => FirebaseAuth.instance.signOut()),
-                  icon: const Icon(Icons.logout),
-                ),
-              ],
-            )
-          ],
-        )),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              Text('Product List'),
+            ],
+          ),
+        ),
+        actions: [
+          ButtonBar(
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    padding: const EdgeInsets.only(right: 5),
+                    alignment: Alignment.centerRight,
+                    onPressed: (() => FirebaseAuth.instance.signOut()),
+                    icon: const Icon(Icons.logout),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
       body: StreamBuilder(
         stream: _products.snapshots(),
@@ -217,8 +273,10 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(12),
                           onPressed: (context) {
                             _update(documentSnapshot);
+                            formKey.currentState!.reset();
                           },
                           icon: Icons.edit,
+                          label: 'Edit',
                           backgroundColor: Colors.green,
                         ),
                       ],
@@ -232,6 +290,7 @@ class _HomePageState extends State<HomePage> {
                             _delete(documentSnapshot.id);
                           },
                           icon: Icons.delete_forever_rounded,
+                          label: 'Delete',
                           backgroundColor: Colors.red,
                         ),
                       ],

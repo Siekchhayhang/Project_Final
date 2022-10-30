@@ -10,6 +10,8 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpasswordController =
       TextEditingController();
+
+
   void dispose() {
     userController.dispose();
     passwordController.dispose();

@@ -16,12 +16,20 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    userController.clear();
+    passwordController.clear();
+    super.initState();
+  }
+
   @override
   void dispose() {
-    super.dispose();
     userController.dispose();
     passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -37,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            key: formKey,
             children: [
               TextField(
                 controller: userController,
@@ -66,8 +75,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(18),
                             color: Colors.blue,
                             child: const Text('Login'),
-                            onPressed: () => login(userController.text.trim(),
-                                passwordController.text.trim())),
+                            onPressed: () {
+                              login(
+                                userController.text.trim(),
+                                passwordController.text.trim(),
+                              );
+                              formKey.currentState!.reset();
+                            }),
                       ),
 
                       // const SizedBox(height: 10),
