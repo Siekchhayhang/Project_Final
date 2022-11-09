@@ -31,7 +31,7 @@ class _GoogleSigninPageState extends State<GoogleSigninPage> {
             setState(
               () {
                 GoogleSignIn().signIn();
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const LoginScreen(),

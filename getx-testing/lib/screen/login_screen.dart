@@ -16,7 +16,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  bool obserText = true;
 
   @override
   void initState() {
@@ -45,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            key: formKey,
+            key: _formKey,
             children: [
               TextField(
                 controller: userController,
@@ -55,10 +56,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 30,
               ),
               TextField(
-                obscureText: true,
+                obscureText: obserText,
                 maxLength: 16,
                 controller: passwordController,
-                decoration: const InputDecoration(labelText: 'Enter Password'),
+                decoration: InputDecoration(
+                  labelText: 'Enter Password',
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        obserText = !obserText;
+                      });
+                      FocusScope.of(context).unfocus();
+                    },
+                    child: Icon(
+                      obserText == true
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 16,
@@ -80,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 userController.text.trim(),
                                 passwordController.text.trim(),
                               );
-                              formKey.currentState!.reset();
+                              _formKey.currentState!.reset();
                             }),
                       ),
 

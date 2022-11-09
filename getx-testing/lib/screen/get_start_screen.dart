@@ -17,10 +17,11 @@ class GetStartScreen extends StatelessWidget {
             final prefs = await SharedPreferences.getInstance();
             prefs.setBool('showHome', false);
 
+            // ignore: use_build_context_synchronously
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (_) => const LoginScreen(),
+                builder: (context) => const LoginScreen(),
               ),
             );
           },

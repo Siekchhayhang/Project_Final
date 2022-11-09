@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:getx_testting/screen/onboarding_screen.dart';
+import '../drawer/my_drawer_view.dart';
+import '../drawer/my_header_drawer.dart';
 import '../pages/setttings_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  // ignore: unused_element
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -197,6 +199,8 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
             ),
@@ -209,6 +213,8 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                   color: Colors.blue,
                   fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
             )
@@ -221,7 +227,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   void _navigateBottomBar(int index) {
     setState(() {
-      _selectedIndex = index;
+      if (_selectedIndex != 0) {
+        _selectedIndex = 1;
+      } else {
+        _selectedIndex = 0;
+      }
     });
   }
 
@@ -245,8 +255,11 @@ class _HomePageState extends State<HomePage> {
                   IconButton(
                     padding: const EdgeInsets.only(right: 5),
                     alignment: Alignment.centerRight,
-                    onPressed: (() => FirebaseAuth.instance.signOut()),
-                    icon: const Icon(Icons.logout),
+                    onPressed: (() {}),
+                    icon: const Icon(
+                      Icons.search,
+                      size: 26,
+                    ),
                   ),
                 ],
               ),
@@ -273,7 +286,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(12),
                           onPressed: (context) {
                             _update(documentSnapshot);
-                            formKey.currentState!.reset();
+                            // formKey.currentState!.reset();
                           },
                           icon: Icons.edit,
                           label: 'Edit',
@@ -358,6 +371,18 @@ class _HomePageState extends State<HomePage> {
             label: 'Settings',
           ),
         ],
+      ),
+      drawer: Drawer(
+        backgroundColor: Colors.grey[500],
+        elevation: 0,
+        child: SingleChildScrollView(
+          child: Column(
+            children: const [
+              MyHeaderDrawer(),
+              MyDrawerListView(),
+            ],
+          ),
+        ),
       ),
     );
   }
